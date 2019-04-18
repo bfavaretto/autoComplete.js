@@ -246,7 +246,7 @@
         input.onkeyup = function (event) {
           var resultsList = _this2.resultsList;
           var clearResults = autoCompleteView.clearResults(resultsList);
-          if (input.value.length > _this2.threshold && input.value.replace(/ /g, "").length) {
+          if (input.value.length >= _this2.threshold) {
             var list = _this2.listMatchedResults(data);
             input.dispatchEvent(new CustomEvent("type", {
               bubbles: true,
@@ -261,7 +261,14 @@
             if (onSelection) {
               autoCompleteView.getSelection(selector, resultsList, onSelection, list);
             }
+          } else {
+            clearResults();
           }
+        };
+        input.onblur = function () {
+          var resultsList = _this2.resultsList;
+          var clearResults = autoCompleteView.clearResults(resultsList);
+          clearResults();
         };
       }
     }, {

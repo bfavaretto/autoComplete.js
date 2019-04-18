@@ -163,7 +163,8 @@ export default class autoComplete {
       // Clear Results function holder
       const clearResults = autoCompleteView.clearResults(resultsList);
       // Check if input is not empty or just have space before triggering the app
-      if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
+      // if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
+      if (input.value.length >= this.threshold) {
         // List matching results
         const list = this.listMatchedResults(data);
         // Event emitter on input field
@@ -184,8 +185,16 @@ export default class autoComplete {
         }
       } else {
         // clears all results list
-        clearResults;
+        clearResults();
       }
+    };
+
+    input.onblur = () => {
+      // Get results list value
+      const resultsList = this.resultsList;
+      // Clear Results function holder
+      const clearResults = autoCompleteView.clearResults(resultsList);
+      clearResults();
     };
   }
 
